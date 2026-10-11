@@ -37,3 +37,22 @@
 :target {
   scroll-margin-block: 1rem;
 }
+
+body { font-size: 23px; line-height: 1.5; }
+h1, h2, h3, h4 { font-weight: 500 !important; }
+nav, footer { font-size: 18px; }
+.app-prose { font-size: 23px; line-height: 1.6; }
+:lang(ta) { font-family: var(--font-tamil), serif; }
+.app-prose:lang(ta) { font-size: 20px; line-height: 1.95; }
+.post-card:lang(ta) { font-size: 18px; line-height: 1.9; }
+.post-card a { font-size: 25px; }
+.post-card:lang(ta) a { font-size: 21px; }
+pre, code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace !important; }
+.post-language-switch { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 28px; font-size: 18px; }
+.post-language-switch a { padding: 8px 14px; min-height: 44px; border-radius: 4px; }
+.post-language-switch a[aria-current="page"] { background: var(--muted); color: var(--accent); }
+.post-language-switch a:lang(ta) { font-size: 16px; }
+@media (max-width: 520px) {
+  body, .app-prose { font-size: 21px; }
+  .app-prose:lang(ta) { font-size: 19px; }
+}

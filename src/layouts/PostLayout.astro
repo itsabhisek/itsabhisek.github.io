@@ -9,9 +9,12 @@ type Props = {
   canonicalURL?: string;
   pubDatetime?: Date;
   modDatetime?: Date | null;
+  lang?: "ta" | "en";
+  alternates?: { lang: "ta" | "en"; href: string }[];
 };
 
 const { site } = config;
+const { lang = "ta", alternates = [] } = Astro.props;
 
 const { title, description, ogImage, canonicalURL, pubDatetime, modDatetime } =
   Astro.props;
@@ -21,6 +24,7 @@ const structuredData = {
   "@type": "BlogPosting",
   headline: title ?? site.title,
   image: ogImage,
+  inLanguage: lang,
   ...(pubDatetime && { datePublished: pubDatetime.toISOString() }),
   ...(modDatetime && { dateModified: modDatetime.toISOString() }),
   author: [
@@ -33,8 +37,9 @@ const structuredData = {
 };
 ---
 
-<Layout {title} {description} {ogImage} {canonicalURL}>
+<Layout {title} {description} {ogImage} {canonicalURL} {lang}>
   <Fragment slot="head">
+    {alternates.map(alternate => <link rel="alternate" hreflang={alternate.lang} href={alternate.href} />)}
     <!-- Override og:type for article pages -->
     <meta property="og:type" content="article" />
 

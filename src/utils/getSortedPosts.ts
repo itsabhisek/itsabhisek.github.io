@@ -7,9 +7,20 @@ import { postFilter } from "./postFilter";
  *
  * Note: filtering respects drafts and scheduled posts via `postFilter()`.
  */
-export function getSortedPosts(posts: CollectionEntry<"posts">[]) {
-  return posts
-    .filter(postFilter)
+export function getSortedPosts(posts: CollectionEntry<"posts">[], options: { allTranslations?: boolean } = {}) {
+  const eligible = posts.filter(postFilter);
+  const groups = new Map<string, CollectionEntry<"posts">[]>();
+  for (const post of eligible) {
+    const key = post.data.translationKey ? `translation:${post.data.translationKey}` : `post:${post.id}`;
+    const group = groups.get(key) ?? [];
+    if (group.some(existing => existing.data.lang === post.data.lang)) {
+      throw new Error(`Duplicate ${post.data.lang} translation for ${post.data.translationKey}`);
+    }
+    group.push(post);
+    groups.set(key, group);
+  }
+  const visible = options.allTranslations ? eligible : [...groups.values()].map(group => group.find(post => post.data.lang === "ta") ?? group[0]);
+  return visible
     .sort(
       (a, b) =>
         Math.floor(

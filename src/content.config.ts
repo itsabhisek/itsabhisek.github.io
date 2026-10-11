@@ -10,6 +10,8 @@ const posts = defineCollection({
   schema: ({ image }) =>
     z.object({
       author: z.string().default(config.site.author),
+      lang: z.enum(["ta", "en"]).default("ta"),
+      translationKey: z.string().min(1).optional(),
       pubDatetime: z.date(),
       modDatetime: z.date().optional().nullable(),
       title: z.string(),

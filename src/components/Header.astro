@@ -11,6 +11,7 @@ import LinkButton from "./LinkButton.astro";
 import { stripBase, stripLocale } from "@/utils/withBase";
 import { useTranslations } from "@/i18n";
 import config from "@/config";
+import Socials from "./Socials.astro";
 
 const { site, features } = config;
 
@@ -43,21 +44,25 @@ const isActive = (path: string) => {
 </a>
 
 <header
+  lang="en"
   class="app-layout flex flex-col items-center justify-between sm:flex-row"
 >
   <div
-    class="border-border bg-background relative flex w-full items-baseline justify-between border-b py-4 sm:items-center sm:py-6"
+    class="header-row border-border bg-background relative flex w-full items-baseline justify-between border-b py-4 sm:items-center sm:py-6"
   >
+    <div class="header-identity">
     <a
       href={getRelativeLocaleUrl(locale, "")}
-      class="brand-logo absolute py-1 whitespace-nowrap sm:static sm:my-auto"
+      class="brand-logo py-1 whitespace-nowrap"
       aria-label={`${site.title} — Home`}
     >
-      <span aria-hidden="true">a<span class="text-accent">.</span></span>
+      <span aria-hidden="true">abhi <span class="brand-divider">/</span> <span lang="ta">அபி</span><span class="text-accent">.</span></span>
     </a>
+    <Socials />
+    </div>
     <nav
       id="nav-menu"
-      class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"
+      class="flex flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"
     >
       <button
         id="menu-btn"
@@ -167,11 +172,23 @@ const isActive = (path: string) => {
 
 <style>
   .brand-logo {
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 42px;
-    font-weight: bold;
+    font-family: var(--font-eb-garamond), Georgia, serif;
+    font-size: 38px;
+    font-weight: 500;
     line-height: 1;
     text-decoration: none;
+  }
+  .brand-logo [lang="ta"] { font-size: 27px; }
+  .brand-divider { font-size: 25px; color: var(--muted-foreground); }
+  .header-identity { display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; }
+  @media (max-width: 640px) {
+    .header-row { flex-wrap: wrap; }
+    #nav-menu { width: 100%; }
+    #menu-btn { position: absolute; top: 16px; right: 0; }
+    #menu-items { width: 100%; }
+    .header-identity { max-width: calc(100% - 48px); }
+    .brand-logo { font-size: 32px; }
+    .brand-logo [lang="ta"] { font-size: 24px; }
   }
 </style>
 

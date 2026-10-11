@@ -12,6 +12,7 @@ type Props = {
   description?: string;
   ogImage?: string;
   canonicalURL?: string;
+  lang?: "ta" | "en";
 };
 
 const { site } = config;
@@ -21,6 +22,7 @@ const {
   description = site.description,
   ogImage = resolveDefaultOgImagePath(config),
   canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
+  lang = "en",
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.site ?? Astro.url);
@@ -33,7 +35,7 @@ const rssHref = getRelativeLocaleUrl(
 <!doctype html>
 <html
   dir={site.dir ?? "ltr"}
-  lang={Astro.currentLocale ?? site.lang}
+  lang={lang}
   class="overflow-y-scroll scroll-smooth"
 >
   <head>
@@ -45,11 +47,12 @@ const rssHref = getRelativeLocaleUrl(
 
     <!-- Font -->
     <Font
-      cssVariable="--font-google-sans-code"
+      cssVariable="--font-eb-garamond"
       preload={[{ subset: "latin", weight: 400, style: "normal" }]}
     />
 
     <!-- Primary meta -->
+    <Font cssVariable="--font-tamil" preload={[{ subset: "tamil", weight: 400, style: "normal" }]} />
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />

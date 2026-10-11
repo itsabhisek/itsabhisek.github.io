@@ -26,7 +26,7 @@ const items = await Promise.all(
   {
     items.map(({ url, title, Icon }) =>
       Icon ? (
-        <LinkButton href={url} class="p-2 hover:rotate-6 sm:p-1" title={title}>
+        <LinkButton href={url} class="social-profile p-2" title={title} target="_blank" rel="noopener noreferrer">
           <Icon class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" />
           <span class="sr-only">{title}</span>
         </LinkButton>
@@ -34,3 +34,8 @@ const items = await Promise.all(
     )
   }
 </div>
+
+<style>
+  .social-profile { min-width: 44px; min-height: 44px; color: var(--muted-foreground); }
+  .social-profile:hover { color: var(--accent); }
+</style>

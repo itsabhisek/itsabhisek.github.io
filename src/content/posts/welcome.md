@@ -4,6 +4,8 @@ description: "Opening a new notebook on the web."
 pubDatetime: 2026-10-11T00:00:00Z
 tags: [personal, beginnings]
 draft: false
+lang: en
+translationKey: welcome
 ---
 
 Every notebook starts with an empty page. This is mine.

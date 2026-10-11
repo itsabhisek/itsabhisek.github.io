@@ -14,7 +14,7 @@ export default defineAstroPaperConfig({
   posts: {
     perPage: 4,
     perIndex: 4,
-    scheduledPostMargin: 15 * 60 * 1000,
+    scheduledPostMargin: 0,
   },
   features: {
     lightAndDarkMode: true,
@@ -26,7 +26,10 @@ export default defineAstroPaperConfig({
     },
     search: "pagefind",
   },
-  socials: [{ name: "github", url: "https://github.com/itsabhisek" }],
+  socials: [
+    { name: "github", url: "https://github.com/itsabhisek" },
+    { name: "linkedin", url: "https://www.linkedin.com/in/abhisekmohan/" },
+  ],
   shareLinks: [
     { name: "whatsapp", url: "https://wa.me/?text=" },
     { name: "facebook", url: "https://www.facebook.com/sharer.php?u=" },

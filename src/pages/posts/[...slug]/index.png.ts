@@ -6,15 +6,15 @@ import sharp from "sharp";
 import { getFontPathByWeight } from "@/utils/getFontPathByWeight";
 import { getPostSlug } from "@/utils/getPostPaths";
 import config from "@/config";
+import { getSortedPosts } from "@/utils/getSortedPosts";
 
 export async function getStaticPaths() {
   if (!config.features.dynamicOgImage) {
     return [];
   }
 
-  const posts = await getCollection("posts").then(p =>
-    p.filter(({ data }) => !data.draft && !data.ogImage)
-  );
+  const posts = getSortedPosts(await getCollection("posts"), { allTranslations: true })
+    .filter(({ data }) => data.lang === "en" && !data.ogImage);
 
   return posts.map(post => ({
     params: { slug: getPostSlug(post.id, post.filePath) },

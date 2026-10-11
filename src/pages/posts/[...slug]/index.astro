@@ -18,32 +18,35 @@ import config from "@/config";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
-  const sortedPosts = getSortedPosts(posts);
+  const sortedPosts = getSortedPosts(posts, { allTranslations: true });
 
-  return sortedPosts.map((post, index) => ({
+  return sortedPosts.map(post => {
+    const languagePosts = sortedPosts.filter(entry => entry.data.lang === post.data.lang);
+    const index = languagePosts.findIndex(entry => entry.id === post.id);
+    return ({
     params: { slug: getPostSlug(post.id, post.filePath) },
     props: {
       post,
       // sortedPosts is newest-first, so "older" (prev) is a higher index
       // and "newer" (next) is a lower index.
       prevPost:
-        index < sortedPosts.length - 1
+        index < languagePosts.length - 1
           ? {
-              id: sortedPosts[index + 1].id,
-              title: sortedPosts[index + 1].data.title,
-              filePath: sortedPosts[index + 1].filePath,
+              id: languagePosts[index + 1].id,
+              title: languagePosts[index + 1].data.title,
+              filePath: languagePosts[index + 1].filePath,
             }
           : null,
       nextPost:
         index > 0
           ? {
-              id: sortedPosts[index - 1].id,
-              title: sortedPosts[index - 1].data.title,
-              filePath: sortedPosts[index - 1].filePath,
+              id: languagePosts[index - 1].id,
+              title: languagePosts[index - 1].data.title,
+              filePath: languagePosts[index - 1].filePath,
             }
           : null,
     },
-  }));
+  }); });
 }
 
 type AdjacentPost = {
@@ -59,6 +62,12 @@ type Props = {
 };
 
 const { post, prevPost, nextPost } = Astro.props;
+const published = getSortedPosts(await getCollection("posts"), { allTranslations: true });
+const translations = post.data.translationKey
+  ? published.filter(entry => entry.data.translationKey === post.data.translationKey)
+  : [post];
+translations.sort((a, b) => a.data.lang === b.data.lang ? 0 : a.data.lang === "ta" ? -1 : 1);
+const alternates = translations.map(entry => ({ lang: entry.data.lang, href: new URL(getPostUrl(entry.id, entry.filePath), config.site.url).href }));
 const locale = Astro.currentLocale ?? config.site.lang;
 
 const {
@@ -88,7 +97,7 @@ if (!ogImageUrl && config.features.dynamicOgImage) {
     /\/+$/,
     ""
   );
-  ogImageUrl = `${postUrl}/index.png`;
+  ogImageUrl = post.data.lang === "ta" ? "/og.png" : `${postUrl}/index.png`;
 }
 
 const ogImage = ogImageUrl
@@ -103,6 +112,8 @@ const ogImage = ogImageUrl
   canonicalURL={canonicalURL}
   pubDatetime={pubDatetime}
   modDatetime={modDatetime}
+  lang={post.data.lang}
+  alternates={alternates}
 >
   <Header />
 
@@ -113,6 +124,15 @@ const ogImage = ogImageUrl
     class:list={["app-layout", { "mt-8": !config.features.showBackButton }]}
     data-pagefind-body
   >
+    {translations.length > 1 && (
+      <nav class="post-language-switch" aria-label="Article language" data-pagefind-ignore>
+        {translations.map(entry => (
+          <a href={getPostUrl(entry.id, entry.filePath)} lang={entry.data.lang} hreflang={entry.data.lang} aria-current={entry.id === post.id ? "page" : undefined}>
+            {entry.data.lang === "ta" ? "தமிழ்" : "English"}
+          </a>
+        ))}
+      </nav>
+    )}
     <h1
       style={{ viewTransitionName: toTransitionName(post.id) }}
       class="text-accent inline-block text-2xl font-bold sm:text-3xl"

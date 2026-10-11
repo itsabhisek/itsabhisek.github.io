@@ -62,6 +62,24 @@ export default defineConfig({
   },
   fonts: [
     {
+      name: "EB Garamond",
+      cssVariable: "--font-eb-garamond",
+      provider: fontProviders.google(),
+      fallbacks: ["Georgia", "serif"],
+      weights: [400, 500],
+      styles: ["normal", "italic"],
+      formats: ["woff", "ttf"],
+    },
+    {
+      name: "Noto Serif Tamil",
+      cssVariable: "--font-tamil",
+      provider: fontProviders.google(),
+      subsets: ["tamil", "latin"],
+      weights: [400, 500],
+      styles: ["normal"],
+      formats: ["woff", "ttf"],
+    },
+    {
       name: "Google Sans Code",
       cssVariable: "--font-google-sans-code",
       provider: fontProviders.google(),
