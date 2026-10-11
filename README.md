@@ -2,7 +2,7 @@
 
 Personal blog at https://itsabhisek.github.io, built with [AstroPaper](https://github.com/satnaing/astro-paper) by Sat Naing. The theme's MIT license is preserved in `LICENSE`.
 
-Includes warm taupe light/dark colors, EB Garamond and Noto Serif Tamil typography, Tamil-first posts with English translations, tags, archives, search, RSS, and sitemap.
+Includes warm taupe light/dark backgrounds with Apricot copper accents, EB Garamond and Noto Serif Tamil typography, Tamil-first posts with English translations, tags, archives, search, RSS, and sitemap.
 
 ## Run locally
 
