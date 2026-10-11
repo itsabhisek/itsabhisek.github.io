@@ -19,7 +19,7 @@ export function getSortedPosts(posts: CollectionEntry<"posts">[], options: { all
     group.push(post);
     groups.set(key, group);
   }
-  const visible = options.allTranslations ? eligible : [...groups.values()].map(group => group.find(post => post.data.lang === "ta") ?? group[0]);
+  const visible = options.allTranslations ? eligible : [...groups.values()].map(group => group.find(post => post.data.lang === "en") ?? group[0]);
   return visible
     .sort(
       (a, b) =>

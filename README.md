@@ -39,7 +39,7 @@ Set `draft: false` when ready. Future-dated posts appear only after a new build 
 
 Write your Tamil version in `my-first-post.md` with `lang: ta`. To offer English, create `my-first-post-en.md`, set `lang: en`, and use exactly the same `translationKey` in both files. Translate the title, description, and body; keep publication dates and tags consistent. There can be only one published version of each language for a translation key.
 
-The homepage, post list, archives, and RSS prefer the Tamil version and list the article once. Each version has its own URL, and the article shows a **தமிழ் | English** switch only when both versions are published. Search indexes both languages. If no translation exists, the published version remains available on its own. Posts without `translationKey` are independent. Language defaults to Tamil when `lang` is omitted.
+The homepage, post list, archives, and RSS prefer the English version and list the article once. Each version has its own URL. When both versions are published, a small **தமிழில் வாசிக்க** link appears beneath the date on the English article, with only **தமிழில்** underlined; the Tamil article offers **Read in English**. Search indexes both languages. If no translation exists, the published version remains available on its own. Direct links to either language keep that language. Posts without `translationKey` are independent. The content language still defaults to Tamil when `lang` is omitted.
 
 See `src/content/posts/welcome-ta.md` and `src/content/posts/welcome.md` for a working pair. Tamil posts use the site's social preview image unless you supply a custom `ogImage`; English posts retain generated title images.
 

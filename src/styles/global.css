@@ -48,10 +48,10 @@ nav, footer { font-size: 18px; }
 .post-card a { font-size: 25px; }
 .post-card:lang(ta) a { font-size: 21px; }
 pre, code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace !important; }
-.post-language-switch { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 28px; font-size: 18px; }
-.post-language-switch a { padding: 8px 14px; min-height: 44px; border-radius: 4px; }
-.post-language-switch a[aria-current="page"] { background: var(--muted); color: var(--accent); }
-.post-language-switch a:lang(ta) { font-size: 16px; }
+.post-language-switch { margin: 2px 0 0; }
+.post-language-switch a { display: inline-flex; align-items: center; gap: 5px; padding: 8px 0; min-height: 44px; font-size: 17px; line-height: 1.5; color: var(--muted-foreground); text-decoration: none; }
+.post-language-switch a:lang(ta) { font-size: 14px; line-height: 1.8; }
+.post-language-switch .language-word { color: var(--accent); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
 @media (max-width: 520px) {
   body, .app-prose { font-size: 21px; }
   .app-prose:lang(ta) { font-size: 19px; }

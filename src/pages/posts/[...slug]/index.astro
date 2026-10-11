@@ -66,7 +66,7 @@ const published = getSortedPosts(await getCollection("posts"), { allTranslations
 const translations = post.data.translationKey
   ? published.filter(entry => entry.data.translationKey === post.data.translationKey)
   : [post];
-translations.sort((a, b) => a.data.lang === b.data.lang ? 0 : a.data.lang === "ta" ? -1 : 1);
+const otherTranslation = translations.find(entry => entry.data.lang !== post.data.lang);
 const alternates = translations.map(entry => ({ lang: entry.data.lang, href: new URL(getPostUrl(entry.id, entry.filePath), config.site.url).href }));
 const locale = Astro.currentLocale ?? config.site.lang;
 
@@ -124,15 +124,6 @@ const ogImage = ogImageUrl
     class:list={["app-layout", { "mt-8": !config.features.showBackButton }]}
     data-pagefind-body
   >
-    {translations.length > 1 && (
-      <nav class="post-language-switch" aria-label="Article language" data-pagefind-ignore>
-        {translations.map(entry => (
-          <a href={getPostUrl(entry.id, entry.filePath)} lang={entry.data.lang} hreflang={entry.data.lang} aria-current={entry.id === post.id ? "page" : undefined}>
-            {entry.data.lang === "ta" ? "தமிழ்" : "English"}
-          </a>
-        ))}
-      </nav>
-    )}
     <h1
       style={{ viewTransitionName: toTransitionName(post.id) }}
       class="text-accent inline-block text-2xl font-bold sm:text-3xl"
@@ -153,6 +144,23 @@ const ogImage = ogImageUrl
       </span>
       <EditPost {hideEditPost} {post} class="max-sm:hidden" />
     </div>
+
+    {otherTranslation && (
+      <nav class="post-language-switch" aria-label="Article language" data-pagefind-ignore>
+        <a
+          href={getPostUrl(otherTranslation.id, otherTranslation.filePath)}
+          lang={otherTranslation.data.lang}
+          hreflang={otherTranslation.data.lang}
+          aria-label={otherTranslation.data.lang === "ta" ? "தமிழில் வாசிக்க" : "Read in English"}
+        >
+          {otherTranslation.data.lang === "ta" ? (
+            <><span class="language-word">தமிழில்</span> வாசிக்க</>
+          ) : (
+            <>Read in <span class="language-word">English</span></>
+          )}
+        </a>
+      </nav>
+    )}
 
     <article
       id="article"
