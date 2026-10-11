@@ -2,6 +2,8 @@ node_modules/
 dist/
 .astro/
 .npm-cache/
+.template/
+public/pagefind/
 .env
 .env.*
 !.env.example
