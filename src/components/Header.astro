@@ -50,9 +50,10 @@ const isActive = (path: string) => {
   >
     <a
       href={getRelativeLocaleUrl(locale, "")}
-      class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
+      class="brand-logo absolute py-1 whitespace-nowrap sm:static sm:my-auto"
+      aria-label={`${site.title} — Home`}
     >
-      {site.title}
+      <span aria-hidden="true">a<span class="text-accent">.</span></span>
     </a>
     <nav
       id="nav-menu"
@@ -163,6 +164,16 @@ const isActive = (path: string) => {
     </nav>
   </div>
 </header>
+
+<style>
+  .brand-logo {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 42px;
+    font-weight: bold;
+    line-height: 1;
+    text-decoration: none;
+  }
+</style>
 
 <script>
   function toggleNav() {
