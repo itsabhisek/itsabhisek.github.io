@@ -56,7 +56,69 @@ The welcome post and About copy are starters you can edit.
 
 ## Publish and sync
 
-Every push to `main` runs GitHub Actions and deploys to GitHub Pages.
+### PowerShell helper
+
+From the blog folder, run each step separately:
+
+```powershell
+# Build locally (installs dependencies first if node_modules is missing)
+.\scripts\blog.ps1 Build
+
+# Preview the successful build at the address printed in the terminal
+npm run preview
+# Press Ctrl+C before continuing
+
+# Review changes, then stage and commit all non-ignored changes locally
+git status
+git diff
+.\scripts\blog.ps1 Commit -Message "Update blog layout"
+
+# Push committed code on the current branch to origin
+.\scripts\blog.ps1 Push
+```
+
+Run the build successfully before committing and pushing. Each helper action is
+independent: Commit does not build or push, and Push does not commit. Deployment
+is manual: pushing `main` saves code on GitHub without deploying. The helper stops
+on a failed command and never force-pushes or rebases. It works from any directory
+when invoked by its full path. Add `-WhatIf` to preview an action.
+
+If Windows blocks the script, invoke that specific command with:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\blog.ps1 Build
+```
+
+This applies the execution policy only to that process, not your saved settings.
+
+### GitHub Pages deployment
+
+In repository **Settings > Pages > Build and deployment**, set **Source** to
+**GitHub Actions**. The existing `.github/workflows/deploy.yml` builds and
+deploys the site; you do not need to upload `dist` manually.
+
+Push to `main` after reviewing the site locally, then trigger deployment below.
+After both jobs succeed, visit https://itsabhisek.github.io/.
+
+To deploy the code already on GitHub manually:
+
+1. Open https://github.com/itsabhisek/itsabhisek.github.io/actions/workflows/deploy.yml.
+2. Click **Run workflow**, select **main**, then click **Run workflow** again.
+3. Wait for the build and deploy jobs to succeed.
+
+Or use GitHub CLI:
+
+```powershell
+gh workflow run deploy.yml --repo itsabhisek/itsabhisek.github.io --ref main
+gh run list --repo itsabhisek/itsabhisek.github.io --workflow deploy.yml --limit 5
+```
+
+Manual deployment uses files committed and pushed to GitHub, not local edits.
+See [GitHub's manual workflow instructions](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow).
+
+### Plain Git commands
+
+These commands save your code to GitHub. Deploy separately using **Run workflow**.
 
 ```sh
 git pull --rebase

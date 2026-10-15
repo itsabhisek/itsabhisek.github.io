@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import IconRss from "@/assets/icons/IconRss.svg";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
@@ -32,27 +31,13 @@ const homePath = getRelativeLocaleUrl(locale, "");
     data-home-path={homePath}
     class="app-layout my-1"
   >
-    <section id="hero" class="border-border border-b pt-8 pb-6">
-      <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
+    <section id="hero" class="border-border border-b pt-7 pb-6">
+      <h1 class="mb-6 text-3xl font-medium sm:text-4xl">
         Hi, I'm Abhisek
       </h1>
-      <a
-        target="_blank"
-        href={`${import.meta.env.BASE_URL.replace(/\/?$/, "/")}rss.xml`}
-        class="inline-block"
-        aria-label="RSS Feed"
-        title="RSS Feed"
-      >
-        <IconRss
-          width={20}
-          height={20}
-          class="stroke-accent scale-125 stroke-3 rtl:-rotate-90"
-        />
-        <span class="sr-only">RSS Feed</span>
-      </a>
 
       <p>A space for ideas, notes, and things worth sharing. One thought at a time.</p><p class="mt-2">Welcome to my personal notebook on the web.</p>
-      <p class="mt-4 text-lg leading-8" lang="ta">வணக்கம்! எண்ணங்களையும் அனுபவங்களையும் பகிரும் என் சிறிய இடம்.</p>
+      <p class="mt-4 text-[17px] leading-[1.85]" lang="ta">வணக்கம்! எண்ணங்களையும் அனுபவங்களையும் பகிரும் என் சிறிய இடம்.</p>
     </section>
 
     {
@@ -60,7 +45,7 @@ const homePath = getRelativeLocaleUrl(locale, "");
         <section
           id="featured"
           class:list={[
-            "pt-12 pb-6",
+            "pt-8 pb-4",
             { "border-border border-b": recentPosts.length > 0 },
           ]}
         >
@@ -78,7 +63,7 @@ const homePath = getRelativeLocaleUrl(locale, "");
 
     {
       recentPosts.length > 0 && (
-        <section id="recent-posts" class="pt-12 pb-6">
+        <section id="recent-posts" class="pt-8 pb-4">
           <h2 class="text-2xl font-semibold tracking-wide">
             {t.home.recentPosts}
           </h2>
